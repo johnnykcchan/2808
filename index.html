@@ -341,6 +341,98 @@
             color: #718096; /* text-gray-500 */
         }
         
+        /* 时钟样式 */
+        .clock-container {
+            position: absolute;
+            top: 20px;
+            left: 0px;
+            z-index: 100;
+        }
+        
+        .clock {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: transparent;
+            position: relative;
+            box-shadow: none;
+        }
+        
+        .dark .clock {
+            background-color: transparent;
+        }
+        
+        .clock-face {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .clock-marker {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transform-origin: center;
+        }
+        
+        .clock-marker span {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: bold;
+            color: #ec4899; /* 粉红色 */
+            transform-origin: center;
+        }
+        
+        .dark .clock-marker span {
+            color: #f472b6; /* 亮粉红色 */
+        }
+        
+        .clock-hand {
+            position: absolute;
+            bottom: 50%;
+            left: 50%;
+            transform-origin: bottom center;
+            border-radius: 4px;
+        }
+        
+        .hour-hand {
+            width: 4px;
+            height: 30%;
+            background-color: #8b5cf6; /* 紫色 */
+        }
+        
+        .dark .hour-hand {
+            background-color: #a78bfa; /* 亮紫色 */
+        }
+        
+        .minute-hand {
+            width: 3px;
+            height: 40%;
+            background-color: #8b5cf6; /* 紫色 */
+        }
+        
+        .dark .minute-hand {
+            background-color: #a78bfa; /* 亮紫色 */
+        }
+        
+        .second-hand {
+            width: 2px;
+            height: 45%;
+            background-color: #9ca3af; /* 灰色 */
+        }
+        
+        .clock-center {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #9ca3af; /* 灰色 */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
         /* 深色模式下历史记录歌曲名和时间戳的样式 */
         .dark .history-song-name,
         .dark .history-song-time {
@@ -448,14 +540,67 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen">
+    <!-- 时钟区域 -->
+    <div class="clock-container">
+        <div class="clock">
+            <div class="clock-face">
+                <!-- 时钟刻度 -->
+                <div class="clock-marker" style="transform: rotate(0deg);">
+                    <span style="transform: rotate(0deg);">12</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(30deg);">
+                    <span style="transform: rotate(-30deg);">1</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(60deg);">
+                    <span style="transform: rotate(-60deg);">2</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(90deg);">
+                    <span style="transform: rotate(-90deg);">3</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(120deg);">
+                    <span style="transform: rotate(-120deg);">4</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(150deg);">
+                    <span style="transform: rotate(-150deg);">5</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(180deg);">
+                    <span style="transform: rotate(-180deg);">6</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(210deg);">
+                    <span style="transform: rotate(-210deg);">7</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(240deg);">
+                    <span style="transform: rotate(-240deg);">8</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(270deg);">
+                    <span style="transform: rotate(-270deg);">9</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(300deg);">
+                    <span style="transform: rotate(-300deg);">10</span>
+                </div>
+                <div class="clock-marker" style="transform: rotate(330deg);">
+                    <span style="transform: rotate(-330deg);">11</span>
+                </div>
+                
+                <!-- 时钟指针 -->
+                <div id="hourHand" class="clock-hand hour-hand"></div>
+                <div id="minuteHand" class="clock-hand minute-hand"></div>
+                <div id="secondHand" class="clock-hand second-hand"></div>
+                
+                <!-- 时钟中心 -->
+                <div class="clock-center"></div>
+            </div>
+        </div>
+    </div>
+    
     <div class="container mx-auto px-4 py-8 max-w-2xl">
         <!-- 标题区域 -->
         <div class="text-center mb-xl relative">
             <button id="settingsBtn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full shadow transition-all duration-200 hover:shadow-md">
                 <i class="fa fa-cog text-xl"></i>
             </button>
-            <h1 class="text-4xl md:text-5xl font-bold text-primary mb-2 text-shadow animate-bounce-slow">2808阿雯找歌V3</h1>
-            <p class="text-xl md:text-2xl text-secondary font-medium">山酒制作2025-11-12</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-primary mb-2 text-shadow animate-bounce-slow">2808阿雯找歌V3.90</h1>
+            <p class="text-xl md:text-2xl text-secondary font-medium">山酒制作2025-11-14</p>
         </div>
         
         <!-- 主要按钮区域 -->
@@ -473,7 +618,7 @@
             <button id="ancientBtn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-5 rounded-full shadow-md btn-pop text-sm flex items-center">
                 <i class="fa fa-book mr-1"></i> 古风歌
             </button>
-            <button id="popBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-5 rounded-full shadow-md btn-pop text-sm flex items-center">
+            <button id="popBtn" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-5 rounded-full shadow-md btn-pop text-sm flex items-center">
                 <i class="fa fa-music mr-1"></i> 欢快
             </button>
             <button id="grasslandBtn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-5 rounded-full shadow-md btn-pop text-sm flex items-center">
@@ -684,7 +829,7 @@
                 "你笑起来真好看", "你一定要幸福", "你在他乡还好吗", "你怎么舍得我难过", "你走", "逆境重生", "逆流成河", "逆战", 
                 "牛在飞", "暖暖", "女儿情", "欧若拉", "陪你一起变老", "片片相思赋予谁", "骗情骗爱", "漂洋过海来看你", "平凡之路", 
                 "平行恋人", "七里香", "旗开得胜", "起风了", "恰似你的温柔", "千年等一回", "牵丝戏", "前度", "亲爱的那不是爱情", 
-                "青藏高原", "清明上河图", "情花", "情话", "情火", "情人鹤顶红", "情人迷", "情深几许", "情深深雨蒙蒙", "请先说你好", 
+                "青藏高原", "清明上河图", "情花", "情火", "情人鹤顶红", "情人迷", "情深几许", "情深深雨蒙蒙", "请先说你好", 
                 "秋天不回来", "秋天的思念", "全世界谁倾听你", "全是爱", "缺少一个你", "燃烧爱", "让全世界知道我爱你", "热气球", 
                 "人的命天注定", "人间烟火", "人世间", "人走爱未凉", "容易受伤的女人", "如果爱下去", "如果寂寞了", "如愿", "入戏太深", 
                 "若把你", "三生三幸", "三十出头", "三月里的小雨", "沙漠骆驼", "伤疤还没好就忘了疼", "伤河", "伤心城市", "伤心的酒吧", 
@@ -735,16 +880,16 @@
                 "一句先苦后甜", "小美满", "苦笑", "犯贱", "天真", "红装", "和平分手", "坏女孩", "小酒窝", "画心", "错都错了", "放纵", "小情歌", "我知道", 
                 "最初的记忆", "伤心剖半", "我记得我爱过", "茶花开了", "舍得", "我曾用心爱着你", "天下", "一样的月光", "为爱值得", "听说当初你找过我", 
                 "1314公里", "心剖开来", "我们的明天", "我想你了", "野人", "只要有你", "爱情买卖", "情歌", "潮湿的心", "轻舞", "花轿里的人", "月亮照山川", 
-                "问风", "春风十里", "罗刹海市", "难解", "大山", "情如风", "情罪", "猜你的爱", "雪纷飞"
+                "问风", "春风十里", "罗刹海市", "难解", "大山", "情如风", "情罪", "猜你的爱", "雪纷飞", "落了白", "爱错"
             ],
             recent: [
-                "彼岸", "骗我", "贴水浮莲", "奔赴星空", "外愈", "刀马旦", "你的千山万水", "去年夏天", "不染", "独角戏", "此情一直在心间", "请不要对我说Sorry", "你都对我不对", "生日礼物", "痴情冢", "厚颜无耻", "后海酒吧", "被爱融化的雪", "故事还长", "星辰大海", "客官不可以", "筝语", "他他他", "火苗", "你走吧", "野子", "相见非欢", "小野猫", "早安隆回", "不爱又何必纠缠", "童话镇", "荒漠", "善变", "兰花草", "辞九门回忆", "叹云兮", "泡沫", "旧梦", "失控", "最后的人", "忘了", "如果爱忘了", "是妈妈是女儿", "真的爱着你", "阿拉斯加海湾", "可能", "三月三", "难却", "九儿", "放过自己", "姑娘在远方", "寄长月", "春泥", "余香", "被伤过的心还可以爱谁", "我爱的男人变了心", "爱要逃", "我们的纪念", "爱火", "星月落", "孤身", "向云端", "彩虹的微笑", "巴黎23号", "我落泪情绪零碎", "会呼吸的痛", "算了", "破鞋子", "憋心", "致命情人", "飞云之下", "孤单夜莺", "留什么给你", "怀念青春", "红尘来去一场梦", "天际", "有你在", "不要在我寂寞的时候说爱我", "梦里水乡", "一花一世界", "赐伤", "面具", "多余的解释", "我在景德镇等你", "我把往事化如烟", "离别开出花", "要不然我们就这样一万年", "晚秋", "曾经你说", "迟来的爱", "野草与栀子花", "再现也不空", "我又想你了", "下个路口见", "有形的翅膀", "靠近", "夜不能寐", "心痛2009", "清晨粥深夜酒", "字字句句", "天若有情", "掏空", "最后一页", "剑魂", "学猫叫", "伤心的时候可以听情歌", "小城画师", "小星星", "远走高飞", "有生之恋", "毕竟深爱过", "纳西情歌", "郎的诱惑", "命运", "西楼儿女", "么么哒", "负我不负她", "心上的罗加", "六楼", "幸福了然后呢", "好想复制一个你", "若是月亮还没来", "相思帕", "光亮", "落", "等爱的玫瑰", "自由飞翔", "伤离别", "20岁30岁40岁", "奈何岁月", "探窗", "九十九步退一步", "放", "这一路", "突然的自我", "我认", "在劫难逃", "爱的回归线", "东南西北风", "江南的风吹落江北的雨", "万物生", "西厢寻他", "最后一页", "放空", "辞九门回忆", "凉城", "诺言", "会开花的云", "背对背拥抱", "小三", "桃花诺", "青花", "那个", "白鸽乌鸦相爱的戏码", "我也不想这样", "一句先苦后甜", "小美满", "苦笑", "犯贱", "天真", "红装", "和平分手", "坏女孩", "小酒窝", "画心", "错都错了", "放纵", "小情歌", "我知道", "最初的记忆", "伤心剖半", "我记得我爱过", "茶花开了", "舍得", "我曾用心爱着你", "天下", "一样的月光", "为爱值得", "听说当初你找过我", "1314公里", "心剖开来", "我们的明天", "我想你了", "野人", "只要有你", "爱情买卖", "情歌", "潮湿的心", "轻舞", "花轿里的人", "月亮照山川", "问风", "春风十里", "罗刹海市", "难解", "大山", "情罪", "猜你的爱", "情如风"
+                "彼岸", "骗我", "贴水浮莲", "奔赴星空", "外愈", "刀马旦", "你的千山万水", "去年夏天", "不染", "独角戏", "此情一直在心间", "请不要对我说Sorry", "你都对我不对", "生日礼物", "痴情冢", "厚颜无耻", "后海酒吧", "被爱融化的雪", "故事还长", "星辰大海", "客官不可以", "筝语", "他他他", "火苗", "你走吧", "野子", "相见非欢", "小野猫", "早安隆回", "不爱又何必纠缠", "童话镇", "荒漠", "善变", "兰花草", "辞九门回忆", "叹云兮", "泡沫", "旧梦", "失控", "最后的人", "忘了", "如果爱忘了", "是妈妈是女儿", "真的爱着你", "阿拉斯加海湾", "可能", "三月三", "难却", "九儿", "放过自己", "姑娘在远方", "寄长月", "春泥", "余香", "被伤过的心还可以爱谁", "我爱的男人变了心", "爱要逃", "我们的纪念", "爱火", "星月落", "孤身", "向云端", "彩虹的微笑", "巴黎23号", "我落泪情绪零碎", "会呼吸的痛", "算了", "破鞋子", "憋心", "致命情人", "飞云之下", "孤单夜莺", "留什么给你", "怀念青春", "红尘来去一场梦", "天际", "有你在", "不要在我寂寞的时候说爱我", "梦里水乡", "一花一世界", "赐伤", "面具", "多余的解释", "我在景德镇等你", "我把往事化如烟", "离别开出花", "要不然我们就这样一万年", "晚秋", "曾经你说", "迟来的爱", "野草与栀子花", "再现也不空", "我又想你了", "下个路口见", "有形的翅膀", "靠近", "夜不能寐", "心痛2009", "清晨粥深夜酒", "字字句句", "天若有情", "掏空", "最后一页", "剑魂", "学猫叫", "伤心的时候可以听情歌", "小城画师", "小星星", "远走高飞", "有生之恋", "毕竟深爱过", "纳西情歌", "郎的诱惑", "命运", "西楼儿女", "么么哒", "负我不负她", "心上的罗加", "六楼", "幸福了然后呢", "好想复制一个你", "若是月亮还没来", "相思帕", "光亮", "落", "等爱的玫瑰", "自由飞翔", "伤离别", "20岁30岁40岁", "奈何岁月", "探窗", "九十九步退一步", "放", "这一路", "突然的自我", "我认", "在劫难逃", "爱的回归线", "东南西北风", "江南的风吹落江北的雨", "万物生", "西厢寻他", "最后一页", "放空", "辞九门回忆", "凉城", "诺言", "会开花的云", "背对背拥抱", "小三", "桃花诺", "青花", "那个", "白鸽乌鸦相爱的戏码", "我也不想这样", "一句先苦后甜", "小美满", "苦笑", "犯贱", "天真", "红装", "和平分手", "坏女孩", "小酒窝", "画心", "错都错了", "放纵", "小情歌", "我知道", "最初的记忆", "伤心剖半", "我记得我爱过", "茶花开了", "舍得", "我曾用心爱着你", "天下", "一样的月光", "为爱值得", "听说当初你找过我", "1314公里", "心剖开来", "我们的明天", "我想你了", "野人", "只要有你", "爱情买卖", "情歌", "潮湿的心", "轻舞", "花轿里的人", "月亮照山川", "问风", "春风十里", "罗刹海市", "难解", "大山", "情罪", "猜你的爱", "情如风", "落了白", "爱错"
             ],
             ancient: [
                 "女儿情", "渡红尘", "风筝误", "芙蓉雨", "九张机"
             ],
             pop: [
-                "野花香", "干就得了", "逃之夭夭", "燃烧爱", "失恋阵线联盟", "一物降一物", "与爱共舞", "责无旁贷", "あいしてる我爱你", "全是爱", "你在他乡还好吗", "月亮照山川 (DJ默涵版)"
+                "野花香", "干就得了", "逃之夭夭", "燃烧爱", "失恋阵线联盟", "一物降一物", "与爱共舞", "责无旁贷", "あいしてる我爱你", "全是爱", "你在他乡还好吗", "月亮照山川 (DJ默涵版)", "我太笨DJ", "太想念DJ", "孤单夜莺DJ"
             ],
             grassland: [
                 "我从草原来", "梦草原", "姑娘爱情郎", "火苗", "爱火", "高原蓝", "套马杆"
@@ -2662,6 +2807,22 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
 从解哈美方没缪(从这刻每分每秒)
 赔本内问秀用灿烂(陪伴你换笑容灿烂)`,
             
+            "谭咏麟 - 讲不出再见": `【山酒谐音歌词2023-05-05】
+洗对洗错押后芭比需溜（是对是错也好不必说了）
+溪云喜爱押后芭比尅修（是怨是爱也好不须揭晓）
+猴戏刚中意被龙山得随意（何事更重要比两心的需要）
+要请蚂蚁咱么和酷秀（柔情蜜意怎么可缺少）
+系准系腿押后咬哟控球（是进是退也好有若狂潮）
+系统喜爱哑猴八岁发比（是痛是爱也好不须发表）
+场外内运移哦梦熊都八一（曾为你愿意我梦想都不要）
+老鹰机器三极爸维修（流言自此心知不会少）
+解敦请玉溪龙盲与没缪（这段情越是浪漫越美妙）
+类比最喜黑罢休（离别最是吃不消）
+哦嘴巴痒红内被熊哦军民（我最不忍看你背向我转面）
+要早呀哈请芭比居多滚轮（要走一刻请不必诸多眷恋）
+否常冷气养囚那位木要西宁（浮沉浪似人潮哪会没有思念）
+内哦胸三都供拔出再更（你我伤心到讲不出再见）`,
+            
             "王大毛 - 今晚不想睡": `【网络搜索谐音歌词】
 抹狼李菜，挖kia耶泼蓝哦偷败，
 无洗挺沁，无洗轰，无洗咯吼梯。 
@@ -2883,6 +3044,38 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
             }
         }
         
+        // 时钟功能
+        function initClock() {
+            const hourHand = document.getElementById('hourHand');
+            const minuteHand = document.getElementById('minuteHand');
+            const secondHand = document.getElementById('secondHand');
+            
+            if (!hourHand || !minuteHand || !secondHand) return;
+            
+            function updateClock() {
+                const now = new Date();
+                const hours = now.getHours() % 12; // 12小时制
+                const minutes = now.getMinutes();
+                const seconds = now.getSeconds();
+                
+                // 计算角度
+                const hourDegrees = (hours * 30) + (minutes * 0.5); // 每小时30度，每分钟额外0.5度
+                const minuteDegrees = minutes * 6; // 每分钟6度
+                const secondDegrees = seconds * 6; // 每秒6度
+                
+                // 更新指针旋转
+                hourHand.style.transform = `translateX(-50%) rotate(${hourDegrees}deg)`;
+                minuteHand.style.transform = `translateX(-50%) rotate(${minuteDegrees}deg)`;
+                secondHand.style.transform = `translateX(-50%) rotate(${secondDegrees}deg)`;
+            }
+            
+            // 初始更新
+            updateClock();
+            
+            // 每秒更新一次
+            setInterval(updateClock, 1000);
+        }
+        
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', () => {
             init();
@@ -2892,6 +3085,7 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
             initThemeSettings();
             initAnniversary();
             initLyricsSearch();
+            initClock();
             
             // 监听界面大小变化，更新歌词显示
             const observer = new MutationObserver((mutations) => {
