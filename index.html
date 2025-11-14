@@ -18,10 +18,17 @@
         // 农历转公历功能
         // 由于农历转公历算法复杂，这里使用简化版本，实际应用中可能需要更复杂的算法
         function lunarToSolar(lunarYear, lunarMonth, lunarDay) {
-            // 这里使用一个简单的映射表，仅包含参考图片中的日期
+            // 这里使用一个简单的映射表，包含需要的日期
             // 实际应用中应该使用完整的农历转公历算法
             const lunarMap = {
-                '10-18': '12-3'  // 农历十月十八 -> 阳历十二月三日
+                '10-18': '12-3',  // 农历十月十八 -> 阳历十二月三日
+                '9-25': '11-14',  // 农历九月二十五 -> 阳历十一月十四日
+                '9-26': '11-15',  // 农历九月二十六 -> 阳历十一月十五日
+                '11-4': '12-16',  // 农历十一月初四 -> 阳历十二月十六日
+                '2-12': '3-24',   // 农历二月十二 -> 阳历三月二十四日
+                '3-1': '4-10',    // 农历三月初一 -> 阳历四月十日
+                '9-10': '10-25',  // 农历九月初十 -> 阳历十月二十五日
+                '7-26': '9-10'    // 农历七月二十六 -> 阳历九月十日
             };
             
             const key = `${lunarMonth}-${lunarDay}`;
@@ -50,9 +57,10 @@
             { type: 'solar', month: 8, day: 20, event: '山酒生日' },
             { type: 'solar', month: 8, day: 25, event: '道童哥生日' },
             { type: 'solar', month: 3, day: 15, event: '男孩哥生日' },
-            { type: 'solar', month: 11, day: 06, event: '阿雯找歌V1发布' },
-            { type: 'solar', month: 11, day: 09, event: '阿雯找歌V2发布：有搜索有历史，闽南歌改欢快歌' },
-            { type: 'solar', month: 11, day: 13, event: '阿雯找歌V3发布：添加纪念日提醒' },
+            { type: 'solar', month: 11, day: 06, event: '阿雯找歌离线版V1发给阿雯' },
+            { type: 'solar', month: 11, day: 09, event: '阿雯找歌离线版噶给阿雯V2发布：有搜索有历史，闽南歌改欢快歌' },
+            { type: 'solar', month: 11, day: 12, event: '阿雯找歌离线版发给阿雯V3：添加纪念日提醒' },
+            { type: 'solar', month: 11, day: 14, event: '阿雯找歌V3.90发布到https://johnnykcchan.github.io/2808/：添加时钟和谐音歌词' },
             
             // 农历纪念日（参考图片）
             { type: 'lunar', month: 10, day: 18, event: '阿雯生日' },
@@ -589,6 +597,13 @@
                 
                 <!-- 时钟中心 -->
                 <div class="clock-center"></div>
+            </div>
+            
+            <!-- 日期显示区域 -->
+            <div id="dateDisplay" class="text-center mt-2">
+                <div id="solarDate" class="text-xs text-gray-500"></div>
+                <div id="weekDay" class="text-xs text-gray-500"></div>
+                <div id="lunarDate" class="text-xs text-gray-500"></div>
             </div>
         </div>
     </div>
@@ -3067,6 +3082,9 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
                 hourHand.style.transform = `translateX(-50%) rotate(${hourDegrees}deg)`;
                 minuteHand.style.transform = `translateX(-50%) rotate(${minuteDegrees}deg)`;
                 secondHand.style.transform = `translateX(-50%) rotate(${secondDegrees}deg)`;
+                
+                // 更新日期显示
+                updateDateDisplay(now);
             }
             
             // 初始更新
@@ -3074,6 +3092,80 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
             
             // 每秒更新一次
             setInterval(updateClock, 1000);
+        }
+        
+        // 更新日期显示
+        function updateDateDisplay(date) {
+            const solarDateElement = document.getElementById('solarDate');
+            const weekDayElement = document.getElementById('weekDay');
+            const lunarDateElement = document.getElementById('lunarDate');
+            
+            if (!solarDateElement || !weekDayElement || !lunarDateElement) return;
+            
+            // 显示阳历日期 (yyyy-mm-dd)
+            const year = date.getFullYear();
+            const month = padZero(date.getMonth() + 1);
+            const day = padZero(date.getDate());
+            solarDateElement.textContent = `${year}-${month}-${day}`;
+            
+            // 显示星期几
+            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            weekDayElement.textContent = weekdays[date.getDay()];
+            
+            // 显示农历日期
+            const lunarDate = solarToLunar(year, date.getMonth() + 1, day);
+            const lunarMonthText = getChineseNumber(lunarDate.lunarMonth);
+            const lunarDayText = getChineseNumber(lunarDate.lunarDay);
+            lunarDateElement.textContent = `农历${lunarMonthText}月${lunarDayText}日`;
+        }
+        
+        // 将阿拉伯数字转换为中文数字
+        function getChineseNumber(num) {
+            const digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+            const tens = ['', '十', '二十', '三十'];
+            
+            if (num <= 10) {
+                return digits[num];
+            } else if (num < 20) {
+                return '十' + (num % 10 !== 0 ? digits[num % 10] : '');
+            } else {
+                return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? digits[num % 10] : '');
+            }
+        }
+        
+        // 农历转换 - 简化版
+        function solarToLunar(year, month, day) {
+            // 简化版农历转换，实际应用中可能需要更复杂的算法
+            // 这里使用一个简单的映射表，包含需要的日期
+            
+            const solarMap = {
+                '11-14': { lunarMonth: 9, lunarDay: 25 },  // 阳历十一月十四日 -> 农历九月二十五
+                '12-3': { lunarMonth: 10, lunarDay: 18 },   // 阳历十二月三日 -> 农历十月十八
+                '11-15': { lunarMonth: 9, lunarDay: 26 },  // 阳历十一月十五日 -> 农历九月二十六
+                '12-16': { lunarMonth: 11, lunarDay: 4 },  // 阳历十二月十六日 -> 农历十一月初四
+                '3-24': { lunarMonth: 2, lunarDay: 12 },   // 阳历三月二十四日 -> 农历二月十二
+                '4-10': { lunarMonth: 3, lunarDay: 1 },    // 阳历四月十日 -> 农历三月初一
+                '10-25': { lunarMonth: 9, lunarDay: 10 },  // 阳历十月二十五日 -> 农历九月初十
+                '9-10': { lunarMonth: 7, lunarDay: 26 }    // 阳历九月十日 -> 农历七月二十六
+            };
+            
+            const key = `${month}-${day}`;
+            if (solarMap[key]) {
+                return solarMap[key];
+            }
+            
+            // 如果没有找到映射，尝试使用逆运算
+            for (let lunarMonth = 1; lunarMonth <= 12; lunarMonth++) {
+                for (let lunarDay = 1; lunarDay <= 30; lunarDay++) {
+                    const solarDate = lunarToSolar(year, lunarMonth, lunarDay);
+                    if (solarDate && solarDate.month === month && solarDate.day === parseInt(day)) {
+                        return { lunarMonth, lunarDay };
+                    }
+                }
+            }
+            
+            // 如果找不到，返回空
+            return { lunarMonth: '', lunarDay: '' };
         }
         
         // 页面加载完成后初始化
