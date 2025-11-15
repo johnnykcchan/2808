@@ -22,13 +22,7 @@
             // 实际应用中应该使用完整的农历转公历算法
             const lunarMap = {
                 '10-18': '12-3',  // 农历十月十八 -> 阳历十二月三日
-                '9-25': '11-14',  // 农历九月二十五 -> 阳历十一月十四日
-                '9-26': '11-15',  // 农历九月二十六 -> 阳历十一月十五日
-                '11-4': '12-16',  // 农历十一月初四 -> 阳历十二月十六日
-                '2-12': '3-24',   // 农历二月十二 -> 阳历三月二十四日
-                '3-1': '4-10',    // 农历三月初一 -> 阳历四月十日
-                '9-10': '10-25',  // 农历九月初十 -> 阳历十月二十五日
-                '7-26': '9-10'    // 农历七月二十六 -> 阳历九月十日
+                '9-25': '11-14'   // 农历九月二十五 -> 阳历十一月十四日
             };
             
             const key = `${lunarMonth}-${lunarDay}`;
@@ -68,6 +62,7 @@
             { type: 'lunar', month: 2, day: 12, event: '奶奶生日' },
             { type: 'lunar', month: 3, day: 1, event: '姑姑生日' },
             { type: 'lunar', month: 9, day: 10, event: '爷爷生日' },
+            { type: 'lunar', month: 9, day: 26, event: '测试html农历有没有错' },
             { type: 'lunar', month: 7, day: 26, event: '二姐罗菲香生日' },
             
             // 二十四节气
@@ -599,11 +594,14 @@
                 <div class="clock-center"></div>
             </div>
             
-            <!-- 日期显示区域 -->
+            <!-- 日期显示区域 - 百度标准格式 -->
             <div id="dateDisplay" class="text-center mt-2">
                 <div id="solarDate" class="text-xs text-gray-500"></div>
                 <div id="weekDay" class="text-xs text-gray-500"></div>
                 <div id="lunarDate" class="text-xs text-gray-500"></div>
+                <div id="startTime" class="text-xs text-gray-500 mt-1">开播时间：加载中...</div>
+                <div id="elapsedTime" class="text-xs font-medium text-gray-500">开播时长：加载中...</div>
+                <div id="daysUntilTarget" class="text-xs text-gray-500 mt-1">距离2/21日：计算中...</div>
             </div>
         </div>
     </div>
@@ -614,8 +612,8 @@
             <button id="settingsBtn" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 hover:bg-gray-300 text-gray-700 p-2 rounded-full shadow transition-all duration-200 hover:shadow-md">
                 <i class="fa fa-cog text-xl"></i>
             </button>
-            <h1 class="text-4xl md:text-5xl font-bold text-primary mb-2 text-shadow animate-bounce-slow">2808阿雯找歌V3.90</h1>
-            <p class="text-xl md:text-2xl text-secondary font-medium">山酒制作2025-11-14</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-primary mb-2 text-shadow animate-bounce-slow">2808阿雯找歌V3.117</h1>
+            <p class="text-xl md:text-2xl text-secondary font-medium">山酒制作2025-11-15</p>
         </div>
         
         <!-- 主要按钮区域 -->
@@ -715,12 +713,7 @@
             <div id="searchResults" class="absolute left-0 right-0 mt-2 bg-transparent backdrop-blur-sm rounded-lg shadow-lg overflow-hidden z-50 max-h-96 overflow-y-auto hidden">
         </div>
         
-        <!-- 时间显示区域 -->
-        <div class="mt-8 pt-4 border-t border-gray-200 text-center text-sm text-gray-600">
-            <div id="startTime" class="mb-1">开播时间：加载中...</div>
-            <div id="currentTime" class="mb-1">目前时间：加载中...</div>
-            <div id="elapsedTime" class="font-medium">开播累计时间：加载中...</div>
-        </div>
+        <!-- 原时间显示区域已移除，相关内容已移动到时钟下方 -->
         
         <!-- 主题设置面板 -->
         <div id="themeSettings" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
@@ -764,7 +757,7 @@
                         <button id="sizeSmallBtn" class="py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 flex items-center justify-center">
                             <i class="fa fa-compress mr-2"></i> 小
                         </button>
-                        <button id="sizeMediumBtn" class="py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 flex items-center justify-center">
+                        <button id="sizeMediumBtn" class="py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 flex items-center justify-center ring-2 ring-primary">
                             <i class="fa fa-square mr-2"></i> 中
                         </button>
                         <button id="sizeLargeBtn" class="py-2 px-4 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 flex items-center justify-center">
@@ -895,10 +888,10 @@
                 "一句先苦后甜", "小美满", "苦笑", "犯贱", "天真", "红装", "和平分手", "坏女孩", "小酒窝", "画心", "错都错了", "放纵", "小情歌", "我知道", 
                 "最初的记忆", "伤心剖半", "我记得我爱过", "茶花开了", "舍得", "我曾用心爱着你", "天下", "一样的月光", "为爱值得", "听说当初你找过我", 
                 "1314公里", "心剖开来", "我们的明天", "我想你了", "野人", "只要有你", "爱情买卖", "情歌", "潮湿的心", "轻舞", "花轿里的人", "月亮照山川", 
-                "问风", "春风十里", "罗刹海市", "难解", "大山", "情如风", "情罪", "猜你的爱", "雪纷飞", "落了白", "爱错"
+                "问风", "春风十里", "罗刹海市", "难解", "大山", "情如风", "情罪", "猜你的爱", "雪纷飞", "落了白", "爱错", "与花同在"
             ],
             recent: [
-                "彼岸", "骗我", "贴水浮莲", "奔赴星空", "外愈", "刀马旦", "你的千山万水", "去年夏天", "不染", "独角戏", "此情一直在心间", "请不要对我说Sorry", "你都对我不对", "生日礼物", "痴情冢", "厚颜无耻", "后海酒吧", "被爱融化的雪", "故事还长", "星辰大海", "客官不可以", "筝语", "他他他", "火苗", "你走吧", "野子", "相见非欢", "小野猫", "早安隆回", "不爱又何必纠缠", "童话镇", "荒漠", "善变", "兰花草", "辞九门回忆", "叹云兮", "泡沫", "旧梦", "失控", "最后的人", "忘了", "如果爱忘了", "是妈妈是女儿", "真的爱着你", "阿拉斯加海湾", "可能", "三月三", "难却", "九儿", "放过自己", "姑娘在远方", "寄长月", "春泥", "余香", "被伤过的心还可以爱谁", "我爱的男人变了心", "爱要逃", "我们的纪念", "爱火", "星月落", "孤身", "向云端", "彩虹的微笑", "巴黎23号", "我落泪情绪零碎", "会呼吸的痛", "算了", "破鞋子", "憋心", "致命情人", "飞云之下", "孤单夜莺", "留什么给你", "怀念青春", "红尘来去一场梦", "天际", "有你在", "不要在我寂寞的时候说爱我", "梦里水乡", "一花一世界", "赐伤", "面具", "多余的解释", "我在景德镇等你", "我把往事化如烟", "离别开出花", "要不然我们就这样一万年", "晚秋", "曾经你说", "迟来的爱", "野草与栀子花", "再现也不空", "我又想你了", "下个路口见", "有形的翅膀", "靠近", "夜不能寐", "心痛2009", "清晨粥深夜酒", "字字句句", "天若有情", "掏空", "最后一页", "剑魂", "学猫叫", "伤心的时候可以听情歌", "小城画师", "小星星", "远走高飞", "有生之恋", "毕竟深爱过", "纳西情歌", "郎的诱惑", "命运", "西楼儿女", "么么哒", "负我不负她", "心上的罗加", "六楼", "幸福了然后呢", "好想复制一个你", "若是月亮还没来", "相思帕", "光亮", "落", "等爱的玫瑰", "自由飞翔", "伤离别", "20岁30岁40岁", "奈何岁月", "探窗", "九十九步退一步", "放", "这一路", "突然的自我", "我认", "在劫难逃", "爱的回归线", "东南西北风", "江南的风吹落江北的雨", "万物生", "西厢寻他", "最后一页", "放空", "辞九门回忆", "凉城", "诺言", "会开花的云", "背对背拥抱", "小三", "桃花诺", "青花", "那个", "白鸽乌鸦相爱的戏码", "我也不想这样", "一句先苦后甜", "小美满", "苦笑", "犯贱", "天真", "红装", "和平分手", "坏女孩", "小酒窝", "画心", "错都错了", "放纵", "小情歌", "我知道", "最初的记忆", "伤心剖半", "我记得我爱过", "茶花开了", "舍得", "我曾用心爱着你", "天下", "一样的月光", "为爱值得", "听说当初你找过我", "1314公里", "心剖开来", "我们的明天", "我想你了", "野人", "只要有你", "爱情买卖", "情歌", "潮湿的心", "轻舞", "花轿里的人", "月亮照山川", "问风", "春风十里", "罗刹海市", "难解", "大山", "情罪", "猜你的爱", "情如风", "落了白", "爱错"
+                "彼岸", "骗我", "贴水浮莲", "奔赴星空", "外愈", "刀马旦", "你的千山万水", "去年夏天", "不染", "独角戏", "此情一直在心间", "请不要对我说Sorry", "你都对我不对", "生日礼物", "痴情冢", "厚颜无耻", "后海酒吧", "被爱融化的雪", "故事还长", "星辰大海", "客官不可以", "筝语", "他他他", "火苗", "你走吧", "野子", "相见非欢", "小野猫", "早安隆回", "不爱又何必纠缠", "童话镇", "荒漠", "善变", "兰花草", "辞九门回忆", "叹云兮", "泡沫", "旧梦", "失控", "最后的人", "忘了", "如果爱忘了", "是妈妈是女儿", "真的爱着你", "阿拉斯加海湾", "可能", "三月三", "难却", "九儿", "放过自己", "姑娘在远方", "寄长月", "春泥", "余香", "被伤过的心还可以爱谁", "我爱的男人变了心", "爱要逃", "我们的纪念", "爱火", "星月落", "孤身", "向云端", "彩虹的微笑", "巴黎23号", "我落泪情绪零碎", "会呼吸的痛", "算了", "破鞋子", "憋心", "致命情人", "飞云之下", "孤单夜莺", "留什么给你", "怀念青春", "红尘来去一场梦", "天际", "有你在", "不要在我寂寞的时候说爱我", "梦里水乡", "一花一世界", "赐伤", "面具", "多余的解释", "我在景德镇等你", "我把往事化如烟", "离别开出花", "要不然我们就这样一万年", "晚秋", "曾经你说", "迟来的爱", "野草与栀子花", "再现也不空", "我又想你了", "下个路口见", "有形的翅膀", "靠近", "夜不能寐", "心痛2009", "清晨粥深夜酒", "字字句句", "天若有情", "掏空", "最后一页", "剑魂", "学猫叫", "伤心的时候可以听情歌", "小城画师", "小星星", "远走高飞", "有生之恋", "毕竟深爱过", "纳西情歌", "郎的诱惑", "命运", "西楼儿女", "么么哒", "负我不负她", "心上的罗加", "六楼", "幸福了然后呢", "好想复制一个你", "若是月亮还没来", "相思帕", "光亮", "落", "等爱的玫瑰", "自由飞翔", "伤离别", "20岁30岁40岁", "奈何岁月", "探窗", "九十九步退一步", "放", "这一路", "突然的自我", "我认", "在劫难逃", "爱的回归线", "东南西北风", "江南的风吹落江北的雨", "万物生", "西厢寻他", "最后一页", "放空", "辞九门回忆", "凉城", "诺言", "会开花的云", "背对背拥抱", "小三", "桃花诺", "青花", "那个", "白鸽乌鸦相爱的戏码", "我也不想这样", "一句先苦后甜", "小美满", "苦笑", "犯贱", "天真", "红装", "和平分手", "坏女孩", "小酒窝", "画心", "错都错了", "放纵", "小情歌", "我知道", "最初的记忆", "伤心剖半", "我记得我爱过", "茶花开了", "舍得", "我曾用心爱着你", "天下", "一样的月光", "为爱值得", "听说当初你找过我", "1314公里", "心剖开来", "我们的明天", "我想你了", "野人", "只要有你", "爱情买卖", "情歌", "潮湿的心", "轻舞", "花轿里的人", "月亮照山川", "问风", "春风十里", "罗刹海市", "难解", "大山", "情罪", "猜你的爱", "情如风", "落了白", "爱错", "与花同在"
             ],
             ancient: [
                 "女儿情", "渡红尘", "风筝误", "芙蓉雨", "九张机"
@@ -1260,7 +1253,7 @@
             // 显示开播时间
             const startTimeElement = document.getElementById('startTime');
             if (startTimeElement) {
-                startTimeElement.textContent = `开播时间：${formatDateTime(startTime)}`;
+                startTimeElement.textContent = `开播时间：${formatTime(startTime)}`;
             }
             
             // 更新时间显示
@@ -1272,23 +1265,32 @@
         
         // 更新时间显示
         function updateTimeDisplay() {
-            // 显示当前时间
-            const currentTimeElement = document.getElementById('currentTime');
-            if (currentTimeElement) {
-                const now = new Date();
-                currentTimeElement.textContent = `目前时间：${formatDateTime(now)}`;
-            }
-            
             // 显示累计时间
             const elapsedTimeElement = document.getElementById('elapsedTime');
             if (elapsedTimeElement && startTime) {
                 const now = new Date();
                 const elapsedTime = now - startTime;
-                elapsedTimeElement.textContent = `开播累计时间：${formatDuration(elapsedTime)}`;
+                elapsedTimeElement.textContent = `开播时长：${formatDuration(elapsedTime)}`;
+            }
+            
+            // 显示距离2026-02-21的天数
+            const daysUntilTargetElement = document.getElementById('daysUntilTarget');
+            if (daysUntilTargetElement) {
+                const now = new Date();
+                const targetDate = new Date(2026, 1, 21); // 月份从0开始，所以2月是1
+                const daysUntil = Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24));
+                
+                if (daysUntil > 0) {
+                    daysUntilTargetElement.textContent = `距离2/21日：还有${daysUntil}天`;
+                } else if (daysUntil === 0) {
+                    daysUntilTargetElement.textContent = `距离2/21日：今天`;
+                } else {
+                    daysUntilTargetElement.textContent = `距离2/21日：已过${Math.abs(daysUntil)}天`;
+                }
             }
         }
         
-        // 格式化日期时间
+        // 格式化日期时间 - 百度标准格式
         function formatDateTime(date) {
             const year = date.getFullYear();
             const month = padZero(date.getMonth() + 1);
@@ -1298,6 +1300,15 @@
             const seconds = padZero(date.getSeconds());
             
             return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+        }
+        
+        // 格式化时间（只显示时分秒）
+        function formatTime(date) {
+            const hours = padZero(date.getHours());
+            const minutes = padZero(date.getMinutes());
+            const seconds = padZero(date.getSeconds());
+            
+            return `${hours}:${minutes}:${seconds}`;
         }
         
         // 格式化时长（毫秒）
@@ -1863,8 +1874,6 @@
                 }
             });
             
-
-            
             // 初始化历史记录显示
             updateHistoryDisplay();
         }
@@ -2281,8 +2290,11 @@
                     
                     // 检查今天
                     if (solarDate.month === todayMonth && solarDate.day === todayDay) {
+                        // 将数字转换为中文
+                        const lunarMonthText = getChineseNumber(item.month);
+                        const lunarDayText = getChineseNumber(item.day);
                         todayAnniversaries.push({
-                            date: `农历${item.month}月${item.day}日`,
+                            date: `农历${lunarMonthText}月${lunarDayText}日`,
                             event: item.event,
                             type: 'lunar'
                         });
@@ -2290,8 +2302,11 @@
                     
                     // 检查明天
                     if (solarDate.month === tomorrowMonth && solarDate.day === tomorrowDay) {
+                        // 将数字转换为中文
+                        const lunarMonthText = getChineseNumber(item.month);
+                        const lunarDayText = getChineseNumber(item.day);
                         tomorrowAnniversaries.push({
-                            date: `农历${item.month}月${item.day}日`,
+                            date: `农历${lunarMonthText}月${lunarDayText}日`,
                             event: item.event,
                             type: 'lunar'
                         });
@@ -3094,7 +3109,7 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
             setInterval(updateClock, 1000);
         }
         
-        // 更新日期显示
+        // 更新日期显示 - 百度标准格式
         function updateDateDisplay(date) {
             const solarDateElement = document.getElementById('solarDate');
             const weekDayElement = document.getElementById('weekDay');
@@ -3102,17 +3117,17 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
             
             if (!solarDateElement || !weekDayElement || !lunarDateElement) return;
             
-            // 显示阳历日期 (yyyy-mm-dd)
+            // 显示阳历日期 (yyyy-mm-dd) - 百度标准格式
             const year = date.getFullYear();
             const month = padZero(date.getMonth() + 1);
             const day = padZero(date.getDate());
             solarDateElement.textContent = `${year}-${month}-${day}`;
             
-            // 显示星期几
-            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
-            weekDayElement.textContent = weekdays[date.getDay()];
+            // 显示星期几 - 百度标准格式（星期X）
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            weekDayElement.textContent = `星期${weekdays[date.getDay()]}`;
             
-            // 显示农历日期
+            // 显示农历日期 - 百度标准格式（农历XX月XX日）
             const lunarDate = solarToLunar(year, date.getMonth() + 1, day);
             const lunarMonthText = getChineseNumber(lunarDate.lunarMonth);
             const lunarDayText = getChineseNumber(lunarDate.lunarDay);
@@ -3121,6 +3136,8 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
         
         // 将阿拉伯数字转换为中文数字
         function getChineseNumber(num) {
+            if (num === undefined || num === '') return '';
+            
             const digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
             const tens = ['', '十', '二十', '三十'];
             
@@ -3128,8 +3145,21 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
                 return digits[num];
             } else if (num < 20) {
                 return '十' + (num % 10 !== 0 ? digits[num % 10] : '');
-            } else {
+            } else if (num < 100) {
                 return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? digits[num % 10] : '');
+            } else if (num < 1000) {
+                const hundreds = Math.floor(num / 100);
+                const remainder = num % 100;
+                return digits[hundreds] + '百' + (remainder > 0 ? (remainder < 10 ? '零' + digits[remainder] : getChineseNumber(remainder)) : '');
+            } else if (num < 10000) {
+                const thousands = Math.floor(num / 1000);
+                const remainder = num % 1000;
+                return digits[thousands] + '千' + (remainder > 0 ? (remainder < 100 ? '零' + getChineseNumber(remainder) : getChineseNumber(remainder)) : '');
+            } else {
+                // 处理年份（大于等于10000）
+                const tenThousands = Math.floor(num / 10000);
+                const remainder = num % 10000;
+                return getChineseNumber(tenThousands) + '万' + (remainder > 0 ? (remainder < 1000 ? '零' + getChineseNumber(remainder) : getChineseNumber(remainder)) : '');
             }
         }
         
@@ -3139,14 +3169,9 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
             // 这里使用一个简单的映射表，包含需要的日期
             
             const solarMap = {
-                '11-14': { lunarMonth: 9, lunarDay: 25 },  // 阳历十一月十四日 -> 农历九月二十五
-                '12-3': { lunarMonth: 10, lunarDay: 18 },   // 阳历十二月三日 -> 农历十月十八
-                '11-15': { lunarMonth: 9, lunarDay: 26 },  // 阳历十一月十五日 -> 农历九月二十六
-                '12-16': { lunarMonth: 11, lunarDay: 4 },  // 阳历十二月十六日 -> 农历十一月初四
-                '3-24': { lunarMonth: 2, lunarDay: 12 },   // 阳历三月二十四日 -> 农历二月十二
-                '4-10': { lunarMonth: 3, lunarDay: 1 },    // 阳历四月十日 -> 农历三月初一
-                '10-25': { lunarMonth: 9, lunarDay: 10 },  // 阳历十月二十五日 -> 农历九月初十
-                '9-10': { lunarMonth: 7, lunarDay: 26 }    // 阳历九月十日 -> 农历七月二十六
+                '11-14': { lunarYear: 2025, lunarMonth: 9, lunarDay: 25 },  // 阳历十一月十四日 -> 农历九月二十五
+                '11-15': { lunarYear: 2025, lunarMonth: 9, lunarDay: 26 },  // 阳历十一月十五日 -> 农历九月二十六
+                '12-3': { lunarYear: 2025, lunarMonth: 10, lunarDay: 18 }    // 阳历十二月三日 -> 农历十月十八
             };
             
             const key = `${month}-${day}`;
@@ -3159,13 +3184,13 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
                 for (let lunarDay = 1; lunarDay <= 30; lunarDay++) {
                     const solarDate = lunarToSolar(year, lunarMonth, lunarDay);
                     if (solarDate && solarDate.month === month && solarDate.day === parseInt(day)) {
-                        return { lunarMonth, lunarDay };
+                        return { lunarYear: year, lunarMonth, lunarDay };
                     }
                 }
             }
             
-            // 如果找不到，返回空
-            return { lunarMonth: '', lunarDay: '' };
+            // 如果找不到，返回当前日期
+            return { lunarYear: year, lunarMonth: month, lunarDay: parseInt(day) };
         }
         
         // 页面加载完成后初始化
