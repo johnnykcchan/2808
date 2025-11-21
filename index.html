@@ -1284,13 +1284,13 @@
                 if (daysUntil > 0) {
                     daysUntilTargetElement.textContent = `公会到期还有${daysUntil}天`;
                 } else if (daysUntil === 0) {
-                    daysUntilTargetElement.textContent = `公会到期还有0天`;
+                    daysUntilTargetElement.textContent = `公会今天到期`;
                 } else {
-                    daysUntilTargetElement.textContent = `公会已到期${Math.abs(daysUntil)}天`;
+                    daysUntilTargetElement.textContent = `公会已过期${Math.abs(daysUntil)}天`;
                 }
             }
             
-            // 显示距平台到期还有多少天（2027-02-21）
+            // 显示金牌到期还有多少天（2027-02-21）
             const daysUntilPlatformElement = document.getElementById('daysUntilPlatform');
             if (daysUntilPlatformElement) {
                 const now = new Date();
@@ -1298,11 +1298,11 @@
                 const daysUntil = Math.ceil((targetDate - now) / (1000 * 60 * 60 * 24));
                 
                 if (daysUntil > 0) {
-                    daysUntilPlatformElement.textContent = `距平台到期还有${daysUntil}天`;
+                    daysUntilPlatformElement.textContent = `金牌到期还有${daysUntil}天`;
                 } else if (daysUntil === 0) {
-                    daysUntilPlatformElement.textContent = `距平台到期还有0天`;
+                    daysUntilPlatformElement.textContent = `金牌今天到期`;
                 } else {
-                    daysUntilPlatformElement.textContent = `平台已到期${Math.abs(daysUntil)}天`;
+                    daysUntilPlatformElement.textContent = `金牌已过期${Math.abs(daysUntil)}天`;
                 }
             }
         }
@@ -2462,7 +2462,7 @@
             container.innerHTML = `
                 <div class="flex items-center justify-between items-center mb-3">
                     <h2 class="text-xl font-bold text-gray-800 flex items-center">
-                        <i class="fa fa-calendar text-primary mr-2"></i> 纪念日提醒
+                        <i class="fa fa-calendar text-primary mr-2"></i> 山酒提醒阿雯
                         <span id="anniversaryBadge" class="ml-2 bg-primary text-white text-xs px-2 py-1 rounded-full">0</span>
                     </h2>
                     <button id="toggleAnniversaryBtn" class="bg-gray-200 hover:bg-gray-300 text-dark font-medium py-1 px-3 rounded-full text-sm flex items-center">
@@ -3184,11 +3184,6 @@ K撒哦哦多么爱内(其实我我多么爱你)`,
             const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
             weekDayElement.textContent = `星期${weekdays[date.getDay()]}`;
             
-            // 显示农历日期 - 百度标准格式（农历XX月XX日）
-            const lunarDate = solarToLunar(year, date.getMonth() + 1, day);
-            const lunarMonthText = getChineseNumber(lunarDate.lunarMonth);
-            const lunarDayText = getChineseNumber(lunarDate.lunarDay);
-            lunarDateElement.textContent = `农历${lunarMonthText}月${lunarDayText}日`;
         }
         
         // 将阿拉伯数字转换为中文数字
